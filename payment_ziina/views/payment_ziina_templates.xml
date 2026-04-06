@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="payment_provider_ziina" model="payment.provider">
-        <field name="name">Ziina</field>
-        <field name="code">ziina</field>
-        <field name="state">disabled</field>
-    </record>
-
     <record id="payment_ziina_credentials_form" model="ir.ui.view">
         <field name="name">payment.provider.ziina.credentials</field>
         <field name="model">payment.provider</field>
