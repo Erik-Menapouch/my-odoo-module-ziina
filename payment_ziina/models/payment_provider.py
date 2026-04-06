@@ -67,7 +67,7 @@ class PaymentTransaction(models.Model):
             redirect_url = data.get('redirect_url')
             return {
                 'api_url': redirect_url,
-                'form_html': f'<form id="o_payment_redirect_form" action="{redirect_url}" method="get"></form>',
+                'redirect_form_html': f'<form action="{redirect_url}" method="get"></form>',
             }
         except Exception as e:
             _logger.error('Ziina payment error: %s', str(e))
