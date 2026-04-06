@@ -5,5 +5,6 @@
         <field name="code">ziina</field>
         <field name="supported_country_ids" eval="[]"/>
         <field name="supported_currency_ids" eval="[]"/>
+        <field name="provider_ids" eval="[(4, ref('payment_ziina.payment_provider_ziina'))]"/>
     </record>
 </odoo>
