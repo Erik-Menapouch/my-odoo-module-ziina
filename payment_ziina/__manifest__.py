@@ -6,9 +6,9 @@
     'author': 'Erik Menapouch',
     'depends': ['payment'],
     'data': [
+        'views/payment_ziina_templates.xml',
         'data/payment_provider.xml',
         'data/payment_method.xml',
-        'views/payment_ziina_templates.xml',
     ],
     'assets': {
         'web.assets_frontend_lazy': [
