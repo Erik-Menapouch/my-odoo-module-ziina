@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="payment_method_ziina" model="payment.method">
+        <field name="name">Ziina</field>
+        <field name="code">ziina</field>
+        <field name="supported_country_ids" eval="[]"/>
+        <field name="supported_currency_ids" eval="[]"/>
+    </record>
+</odoo>
