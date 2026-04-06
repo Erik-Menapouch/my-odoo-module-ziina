@@ -9,7 +9,6 @@
         'data/payment_provider.xml',
         'data/payment_method.xml',
         'views/payment_ziina_templates.xml',
-        'views/assets.xml',
     ],
     'assets': {
         'web.assets_frontend_lazy': [
