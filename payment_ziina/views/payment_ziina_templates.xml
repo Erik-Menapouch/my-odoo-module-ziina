@@ -13,8 +13,7 @@
         <field name="arch" type="xml">
             <group name="provider_credentials">
                 <field name="ziina_api_key"
-                    attrs="{'invisible': [('code', '!=', 'ziina')]}"
-                    required="code == 'ziina'"
+                    invisible="code != 'ziina'"
                     string="API Key"/>
             </group>
         </field>
