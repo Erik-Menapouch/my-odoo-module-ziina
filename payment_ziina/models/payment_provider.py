@@ -64,8 +64,10 @@ class PaymentTransaction(models.Model):
             response.raise_for_status()
             data = response.json()
             self.provider_reference = data.get('id')
+            redirect_url = data.get('redirect_url')
             return {
-                'api_url': data.get('redirect_url'),
+                'api_url': redirect_url,
+                'form_html': f'<form id="ziina_redirect_form" action="{redirect_url}" method="get"></form>',
             }
         except Exception as e:
             _logger.error('Ziina payment error: %s', str(e))
