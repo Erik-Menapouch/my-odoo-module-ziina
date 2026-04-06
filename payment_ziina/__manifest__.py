@@ -9,7 +9,13 @@
         'data/payment_provider.xml',
         'data/payment_method.xml',
         'views/payment_ziina_templates.xml',
+        'views/assets.xml',
     ],
+    'assets': {
+        'web.assets_frontend_lazy': [
+            'payment_ziina/static/src/js/payment_form.js',
+        ],
+    },
     'post_init_hook': 'post_init_hook',
     'installable': True,
     'auto_install': False,
