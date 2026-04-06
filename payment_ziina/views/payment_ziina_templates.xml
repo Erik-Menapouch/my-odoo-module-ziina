@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <template id="redirect_form">
+        <form t-att-action="api_url" method="get"/>
+    </template>
+
     <record id="payment_ziina_credentials_form" model="ir.ui.view">
         <field name="name">payment.provider.ziina.credentials</field>
         <field name="model">payment.provider</field>

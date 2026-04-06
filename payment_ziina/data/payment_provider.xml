@@ -4,5 +4,6 @@
         <field name="name">Ziina</field>
         <field name="code">ziina</field>
         <field name="state">disabled</field>
+        <field name="redirect_form_view_id" ref="redirect_form"/>
     </record>
 </odoo>

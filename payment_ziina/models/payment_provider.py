@@ -64,11 +64,7 @@ class PaymentTransaction(models.Model):
             response.raise_for_status()
             data = response.json()
             self.provider_reference = data.get('id')
-            redirect_url = data.get('redirect_url')
-            return {
-                'api_url': redirect_url,
-                'redirect_form_html': f'<form action="{redirect_url}" method="get"></form>',
-            }
+            return {'api_url': data.get('redirect_url')}
         except Exception as e:
             _logger.error('Ziina payment error: %s', str(e))
             raise ValidationError('Could not connect to Ziina. Please try again.')
