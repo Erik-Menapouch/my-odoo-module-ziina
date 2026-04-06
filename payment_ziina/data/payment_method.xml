@@ -3,5 +3,6 @@
     <record id="payment_method_ziina" model="payment.method">
         <field name="name">Ziina</field>
         <field name="code">ziina</field>
+        <field name="active">True</field>
     </record>
 </odoo>
