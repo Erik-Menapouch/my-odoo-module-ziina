@@ -10,23 +10,6 @@ _logger = logging.getLogger(__name__)
 class ZiinaController(http.Controller):
 
     @http.route(
-        '/payment/ziina/redirect',
-        type='http',
-        auth='public',
-        methods=['GET'],
-        csrf=False,
-    )
-    def ziina_redirect(self, **data):
-        tx_sudo = request.env['payment.transaction'].sudo().search(
-            [('reference', '=', data.get('ref'))], limit=1
-        )
-        if tx_sudo and tx_sudo.provider_id.code == 'ziina':
-            rendering_values = tx_sudo._get_specific_rendering_values({})
-            if rendering_values.get('api_url'):
-                return request.redirect(rendering_values['api_url'])
-        return request.redirect('/payment/status')
-
-    @http.route(
         '/payment/ziina/return',
         type='http',
         auth='public',
@@ -40,7 +23,7 @@ class ZiinaController(http.Controller):
 
     @http.route(
         '/payment/ziina/webhook',
-        type='jsonrpc',
+        type='json',
         auth='public',
         methods=['POST'],
         csrf=False,
@@ -48,4 +31,21 @@ class ZiinaController(http.Controller):
     )
     def ziina_webhook(self, **data):
         _logger.info('Ziina webhook received with data:\n%s', pprint.pformat(data))
+        payload = request.get_json_data()
+        _logger.info('Ziina webhook payload:\n%s', pprint.pformat(payload))
+
+        payment_intent_id = payload.get('id')
+        status = payload.get('status')
+
+        if payment_intent_id and status:
+            tx = request.env['payment.transaction'].sudo().search(
+                [('provider_reference', '=', payment_intent_id)], limit=1
+            )
+            if tx:
+                if status == 'completed':
+                    tx._set_done()
+                elif status == 'failed':
+                    tx._set_error('Payment failed on Ziina')
+                elif status == 'cancelled':
+                    tx._set_canceled()
         return 'OK'
