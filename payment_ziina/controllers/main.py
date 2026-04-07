@@ -31,21 +31,33 @@ class ZiinaController(http.Controller):
     )
     def ziina_webhook(self, **data):
         _logger.info('Ziina webhook received with data:\n%s', pprint.pformat(data))
-        payload = request.get_json_data()
+        try:
+            payload = request.get_json_data()
+        except Exception:
+            payload = data
         _logger.info('Ziina webhook payload:\n%s', pprint.pformat(payload))
+
+        # Handle nested payload from Ziina
+        if 'data' in payload:
+            payload = payload['data']
 
         payment_intent_id = payload.get('id')
         status = payload.get('status')
+
+        _logger.info('Processing payment intent %s with status %s', payment_intent_id, status)
 
         if payment_intent_id and status:
             tx = request.env['payment.transaction'].sudo().search(
                 [('provider_reference', '=', payment_intent_id)], limit=1
             )
             if tx:
+                _logger.info('Found transaction %s', tx.reference)
                 if status == 'completed':
                     tx._set_done()
                 elif status == 'failed':
                     tx._set_error('Payment failed on Ziina')
                 elif status == 'cancelled':
                     tx._set_canceled()
+            else:
+                _logger.warning('No transaction found for payment intent %s', payment_intent_id)
         return 'OK'
