@@ -23,7 +23,7 @@ class ZiinaController(http.Controller):
 
     @http.route(
         '/payment/ziina/webhook',
-        type='json',
+        type='jsonrpc',
         auth='public',
         methods=['POST'],
         csrf=False,
