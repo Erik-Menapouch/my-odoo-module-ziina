@@ -52,7 +52,7 @@ class ZiinaController(http.Controller):
             if provider:
                 # Check actual status directly from Ziina API
                 try:
-                    api_key = provider.ziina_api_key
+                    api_key = provider.sudo().read(['ziina_api_key'])[0].get('ziina_api_key', '')
                     response = requests.get(
                         f'https://api-v2.ziina.com/api/payment_intent/{payment_intent_id}',
                         headers={'Authorization': f'Bearer {api_key}'},
