@@ -45,12 +45,10 @@ class ZiinaController(http.Controller):
         _logger.info('Processing payment intent %s with status %s', payment_intent_id, status)
 
         if payment_intent_id:
-            # Get the provider to fetch API key
             provider = request.env['payment.provider'].sudo().search(
                 [('code', '=', 'ziina')], limit=1
             )
             if provider:
-                # Check actual status directly from Ziina API
                 try:
                     api_key = provider.sudo().read(['ziina_api_key'])[0].get('ziina_api_key', '')
                     response = requests.get(
@@ -72,6 +70,7 @@ class ZiinaController(http.Controller):
                 _logger.info('Found transaction %s', tx.reference)
                 if status == 'completed':
                     tx._set_done()
+                    tx._post_process()
                 elif status == 'failed':
                     tx._set_error('Payment failed on Ziina')
                 elif status == 'cancelled':
