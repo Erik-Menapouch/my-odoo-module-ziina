@@ -70,7 +70,14 @@ class ZiinaController(http.Controller):
                 _logger.info('Found transaction %s', tx.reference)
                 if status == 'completed':
                     tx._set_done()
-                    tx._post_process()
+                    journal = tx.provider_id.journal_id
+                    online_line = journal.inbound_payment_method_line_ids.filtered(
+                        lambda l: l.payment_method_id.code == 'online'
+                    )
+                    if online_line:
+                        tx.with_context(payment_method_line_id=online_line.id)._post_process()
+                    else:
+                        tx._post_process()
                 elif status == 'failed':
                     tx._set_error('Payment failed on Ziina')
                 elif status == 'cancelled':
