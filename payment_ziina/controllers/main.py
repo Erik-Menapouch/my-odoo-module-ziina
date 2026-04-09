@@ -1,11 +1,10 @@
 import logging
 import pprint
-
+import requests
 from odoo import http
 from odoo.http import request
 
 _logger = logging.getLogger(__name__)
-
 
 class ZiinaController(http.Controller):
 
@@ -37,7 +36,6 @@ class ZiinaController(http.Controller):
             payload = data
         _logger.info('Ziina webhook payload:\n%s', pprint.pformat(payload))
 
-        # Handle nested payload from Ziina
         if 'data' in payload:
             payload = payload['data']
 
@@ -46,7 +44,27 @@ class ZiinaController(http.Controller):
 
         _logger.info('Processing payment intent %s with status %s', payment_intent_id, status)
 
-        if payment_intent_id and status:
+        if payment_intent_id:
+            # Get the provider to fetch API key
+            provider = request.env['payment.provider'].sudo().search(
+                [('code', '=', 'ziina')], limit=1
+            )
+            if provider:
+                # Check actual status directly from Ziina API
+                try:
+                    api_key = provider.sudo().read(['ziina_api_key'])[0].get('ziina_api_key', '')
+                    response = requests.get(
+                        f'https://api-v2.ziina.com/api/payment_intent/{payment_intent_id}',
+                        headers={'Authorization': f'Bearer {api_key}'},
+                        timeout=10
+                    )
+                    if response.status_code == 200:
+                        actual_data = response.json()
+                        status = actual_data.get('status', status)
+                        _logger.info('Actual status from Ziina API: %s', status)
+                except Exception as e:
+                    _logger.warning('Could not fetch status from Ziina API: %s', e)
+
             tx = request.env['payment.transaction'].sudo().search(
                 [('provider_reference', '=', payment_intent_id)], limit=1
             )
