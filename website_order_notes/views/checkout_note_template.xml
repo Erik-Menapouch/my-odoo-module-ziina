@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="checkout_note" inherit_id="website_sale.checkout" name="Order Notes">
-        <xpath expr="//div[hasclass('o_website_sale_checkout_container')]" position="inside">
-            <div class="row mb-3">
+        <xpath expr="//div[@id='shop_checkout']" position="inside">
+            <div class="row mb-3 mt-3">
                 <div class="col-12">
                     <label for="customer_note" class="form-label fw-bold">
                         Order Notes (optional)
