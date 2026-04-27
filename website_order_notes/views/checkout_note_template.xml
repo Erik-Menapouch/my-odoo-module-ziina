@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="checkout_note" inherit_id="website_sale.checkout" name="Order Notes">
+        <xpath expr="//div[@id='shop_checkout']" position="inside">
+            <div class="row mb-3 mt-3">
+                <div class="col-12">
+                    <label for="customer_note" class="form-label fw-bold">
+                        Order Notes (optional)
+                    </label>
+                    <textarea
+                        name="customer_note"
+                        id="customer_note"
+                        class="form-control"
+                        rows="3"
+                        placeholder="e.g. For mix packs: 3x Mint, 2x Cola Vanilla"
+                    ></textarea>
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>
