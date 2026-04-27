@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="checkout_note" inherit_id="website_sale.checkout" name="Order Notes">
-        <xpath expr="//form[hasclass('o_wsale_address_form')]" position="before">
-            <div class="container mb-3">
-                <div class="row">
-                    <div class="col-lg-8">
-                        <label for="customer_note" class="form-label fw-bold">
-                            Order Notes (optional)
-                        </label>
-                        <textarea
-                            name="customer_note"
-                            id="customer_note"
-                            class="form-control"
-                            rows="3"
-                            placeholder="e.g. For mix packs: 3x Mint, 2x Cola Vanilla"
-                        ></textarea>
-                    </div>
+        <xpath expr="//div[hasclass('o_website_sale_checkout_container')]" position="inside">
+            <div class="row mb-3">
+                <div class="col-12">
+                    <label for="customer_note" class="form-label fw-bold">
+                        Order Notes (optional)
+                    </label>
+                    <textarea
+                        name="customer_note"
+                        id="customer_note"
+                        class="form-control"
+                        rows="3"
+                        placeholder="e.g. For mix packs: 3x Mint, 2x Cola Vanilla"
+                    ></textarea>
                 </div>
             </div>
         </xpath>
