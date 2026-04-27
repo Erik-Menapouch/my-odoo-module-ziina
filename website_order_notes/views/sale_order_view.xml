@@ -5,7 +5,7 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//page[@name='other_info']" position="inside">
+            <xpath expr="//page[@name='other_information']" position="inside">
                 <group string="Customer Notes">
                     <field name="customer_note" nolabel="1"/>
                 </group>
