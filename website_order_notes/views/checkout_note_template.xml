@@ -13,6 +13,7 @@
                         class="form-control"
                         rows="3"
                         placeholder="e.g. For mix packs: 3x Mint, 2x Cola Vanilla"
+                        onblur="fetch('/shop/save_note', {method: 'POST', headers: {'Content-Type': 'application/x-www-form-urlencoded'}, body: 'customer_note=' + encodeURIComponent(this.value)})"
                     ></textarea>
                 </div>
             </div>
