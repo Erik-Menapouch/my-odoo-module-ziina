@@ -12,4 +12,5 @@ class WebsiteSaleOrderNote(WebsiteSale):
                 order.sudo().write({
                     'customer_note': post.get('customer_note', '')
                 })
-        return super().checkout(**post)
+        response = super(WebsiteSaleOrderNote, self).checkout(**post)
+        return response
